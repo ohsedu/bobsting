@@ -2,14 +2,17 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
+import type { LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Linking from 'expo-linking';
 
-import { LoginScreen } from '../features/auth/screens/LoginScreen';
+import { AuthCallbackScreen, LoginScreen } from '../features/auth/screens';
 import { HomeScreen } from '../features/home/screens/HomeScreen';
 import { useAuth } from '../shared/auth/AuthProvider';
 
 export type RootStackParamList = {
   Login: undefined;
+  AuthCallback: undefined;
   Home: undefined;
 };
 
@@ -26,9 +29,21 @@ export function AppNavigator() {
     );
   }
 
+  const linking: LinkingOptions<RootStackParamList> = {
+    prefixes: [Linking.createURL('/')],
+    config: {
+      screens: {
+        AuthCallback: 'auth/callback',
+        Login: 'login',
+        Home: 'home',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator>
+        <Stack.Screen name="AuthCallback" component={AuthCallbackScreen} options={{ headerShown: false }} />
         {session ? (
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         ) : (

@@ -41,18 +41,3 @@ yarn-error.*
 /android
 .env
 .env.local
-
-# Expo shared state
-.expo-shared/
-
-# logs
-*.log
-
-# build artifacts (EAS / stores)
-*.apk
-*.aab
-*.ipa
-
-# editor settings (optional but common)
-.vscode/
-.idea/

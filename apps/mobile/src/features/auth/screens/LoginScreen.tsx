@@ -18,6 +18,7 @@ export function LoginScreen() {
       ] satisfies Array<{ provider: LoginProvider; label: string; variant: 'light' | 'kakao' }>,
     [],
   );
+  
 
   async function onPress(provider: LoginProvider) {
     if (isLoading) return;
@@ -34,49 +35,51 @@ export function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require('../../../../assets/icon.png')}
-          style={styles.logo}
-          resizeMode="contain"
-          accessibilityLabel="bobsting logo"
-        />
-        <Text style={styles.title}>bobsting</Text>
-        <Text style={styles.subtitle}>지인들과 식사 기록을 캘린더로 공유해요</Text>
-      </View>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Image
+            source={require('../../../../assets/icon.png')}
+            style={styles.logo}
+            resizeMode="contain"
+            accessibilityLabel="bobsting logo"
+          />
+          <Text style={styles.title}>bobsting</Text>
+          <Text style={styles.subtitle}>지인들과 식사 기록을 캘린더로 공유해요</Text>
+        </View>
 
-      <View style={styles.buttons}>
-        {buttons.map((b) => (
-          <Pressable
-            key={b.provider}
-            onPress={() => onPress(b.provider)}
-            disabled={isLoading}
-            style={({ pressed }) => [
-              styles.buttonBase,
-              b.variant === 'kakao' ? styles.buttonKakao : styles.buttonLight,
-              pressed && styles.buttonPressed,
-              isLoading && styles.buttonDisabled,
-            ]}
-          >
-            <View style={styles.buttonContent}>
-              <Image
-                source={
-                  b.provider === 'google'
-                    ? require('../../../../assets/sns_login_logo/icon_login_Google.png')
-                    : require('../../../../assets/sns_login_logo/icon_login_kokoa.png')
-                }
-                style={styles.buttonIcon}
-                resizeMode="contain"
-              />
-              <Text style={styles.buttonTextBase}>{isLoading ? '로그인 중…' : b.label}</Text>
-            </View>
-          </Pressable>
-        ))}
-      </View>
+        <View style={styles.buttons}>
+          {buttons.map((b) => (
+            <Pressable
+              key={b.provider}
+              onPress={() => onPress(b.provider)}
+              disabled={isLoading}
+              style={({ pressed }) => [
+                styles.buttonBase,
+                b.variant === 'kakao' ? styles.buttonKakao : styles.buttonLight,
+                pressed && styles.buttonPressed,
+                isLoading && styles.buttonDisabled,
+              ]}
+            >
+              <View style={styles.buttonContent}>
+                <Image
+                  source={
+                    b.provider === 'google'
+                      ? require('../../../../assets/sns_login_logo/icon_login_Google.png')
+                      : require('../../../../assets/sns_login_logo/icon_login_kokoa.png')
+                  }
+                  style={styles.buttonIcon}
+                  resizeMode="contain"
+                />
+                <Text style={styles.buttonTextBase}>{isLoading ? '로그인 중…' : b.label}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
 
-      <Text style={styles.footnote}>
-        계속 진행하면 서비스 이용약관 및 개인정보처리방침에 동의한 것으로 간주돼요.
-      </Text>
+        <Text style={styles.footnote}>
+          계속 진행하면 {"\n"}서비스 이용약관 및 개인정보처리방침에 동의한 것으로 간주돼요.
+        </Text>
+      </View>
     </View>
   );
 }
@@ -85,15 +88,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 72,
-    paddingBottom: 28,
     backgroundColor: '#FFFFFF',
+  },
+  content: {
+    flex: 1,
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 420,
+    justifyContent: 'center',
+    transform: [{ translateY: -24 }],
   },
   header: {
     gap: 10,
+    alignItems: 'center',
   },
   logo: {
-    alignSelf: 'center',
     width: 100,
     height: 100,
     marginBottom: 6,
@@ -108,6 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     color: '#6B7280',
+    textAlign: 'center',
   },
   buttons: {
     marginTop: 32,
@@ -118,6 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   buttonContent: {
     flexDirection: 'row',
@@ -147,9 +158,10 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   footnote: {
-    marginTop: 'auto',
+    marginTop: 18,
     fontSize: 12,
     lineHeight: 16,
     color: '#9CA3AF',
+    textAlign: 'center',
   },
 });
