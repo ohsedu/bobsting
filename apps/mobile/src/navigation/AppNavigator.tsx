@@ -42,13 +42,13 @@ export function AppNavigator() {
 
   return (
     <NavigationContainer linking={linking}>
-      <Stack.Navigator>
-        <Stack.Screen name="AuthCallback" component={AuthCallbackScreen} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName={session ? 'Home' : 'Login'}>
         {session ? (
           <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         )}
+        <Stack.Screen name="AuthCallback" component={AuthCallbackScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
